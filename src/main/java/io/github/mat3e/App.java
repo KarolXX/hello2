@@ -4,8 +4,9 @@ import org.eclipse.jetty.annotations.AnnotationConfiguration;
 import org.eclipse.jetty.plus.webapp.EnvConfiguration;
 import org.eclipse.jetty.plus.webapp.PlusConfiguration;
 import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.util.component.AbstractLifeCycle;
+import org.eclipse.jetty.util.component.LifeCycle;
 import org.eclipse.jetty.webapp.*;
-import org.slf4j.LoggerFactory;
 
 public class App {
     public static void main(String[] args) throws Exception {
@@ -25,9 +26,14 @@ public class App {
                 });
         webapp.setAttribute("org.eclipse.jetty.server.webapp.ContainerIncludeJarPattern", ".*/classes/.*");
         //webapp.addServlet(HelloServlet.class, "/api/*");
-        var server = new Server();
+        var server = new Server(); //server == jetty
         server.setHandler(webapp);
-
+        server.addLifeCycleListener(new AbstractLifeCycle.AbstractLifeCycleListener() {
+            @Override
+            public void lifeCycleStopped(LifeCycle event) {
+                HibernateUtil.close();
+            }
+        });
         server.start();
         server.join();
     }

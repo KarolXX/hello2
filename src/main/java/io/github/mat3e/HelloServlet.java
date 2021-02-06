@@ -20,7 +20,7 @@ public class HelloServlet extends HttpServlet {
     private HelloService service;
 
     /**
-     * Servlet container needs it
+     * Servlet container (jetty) needs it
      */
     public HelloServlet() {
         this(new HelloService());
