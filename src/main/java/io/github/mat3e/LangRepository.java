@@ -6,10 +6,12 @@ import java.util.Optional;
 
 public class LangRepository {
     Optional<Lang> findById(Integer id) {
-//        var session = HibernateUtil.getSessionFactory().openSession();
-//        var transaction = session.beginTransaction();
-        var lang = new Lang(5, "ysc", "qz");
-        return Optional.of(lang); //delete it
+        var session = HibernateUtil.getSessionFactory().openSession();
+        var transaction = session.beginTransaction();
+        var result = session.get(Lang.class, id);
+        transaction.commit();
+        session.close();
+        return Optional.ofNullable(result);
     }
 }
 

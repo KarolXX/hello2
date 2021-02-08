@@ -63,7 +63,7 @@ public class HelloServiceTest {
         var result = SUT.prepareGreeting(null, null);
 
         // then
-        assertEquals(WELCOME + " " + HelloService.FALLBACK_NAME, result);
+        assertEquals(FALLBACK_ID_WELCOME + " " + HelloService.FALLBACK_NAME, result);
     }
 
     @Test
