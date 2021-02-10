@@ -2,10 +2,14 @@ package io.github.mat3e;
 
 import org.hibernate.annotations.GenericGenerator;
 
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
-public class Lang {
+@Entity
+@Table(name = "languages")
+class Lang {
     @Id
     @GeneratedValue(generator="incr")
     @GenericGenerator(name="incr", strategy = "increment")
