@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>TODO LIST</title>
+    <link rel="stylesheet" href="https://unpkg.com/purecss@2.0.5/build/pure-min.css" integrity="sha384-LTIDeidl25h2dPxrB2Ekgc9c7sEC3CWGM6HeFmuDNUjX76Ert4Z4IY714dhZHPLd" crossorigin="anonymous">
+</head>
+<body>
+<h1>Hello from index.html!!!!!</h1>
+
+<form id="welcomeForm" class="pure-form">
+    <input type="text" name="name" placeholder="name" class="pure-input-rounded" />
+    <fieldset id="langs"></fieldset>
+    <!-- <label  class="pure-radio">
+        <input type="radio"  name="lang" value="1" />  US 🏴 </label>
+    <label  class="pure-radio">
+        <input type="radio"  name="lang" value="2" checked /> 󠁵PL 🏁󠁳󠁡󠁳󠁿󠁳󠁡󠁳󠁿 </label> -->
+
+    <button id="btn"  class="pure-button pure-button-primary">Submit</button>
+</form>
+<div id="welcome"></div>
+<script>
+    const API_URL = 'http://localhost:8081/api';
+    const CODE_TO_EMOJI = {
+        'pl': 'PL 🏁',
+        'en': 'US 🏴',
+        'rus': '🇷🇺'
+    }
+    fetch(`${API_URL}/langs`)
+        .then(response => response.json())
+        .then((langArr) => {
+            const checkboxes = langArr.map(l => `
+                <label class="pure-radio">
+                    <input type="radio" name="lang" value=${l.id}>
+                    ${CODE_TO_EMOJI[l.code]}
+                </label>
+            `).join('\n');
+            document.getElementById('langs').innerHTML = checkboxes;
+        });
+
+    const form = document.getElementById('welcomeForm');
+    const div = document.getElementById('welcome');    
+    
+    document.getElementById('btn').addEventListener('click', e => {
+        e.preventDefault();
+        
+        const formObj = {
+            name: form.elements.name.value,
+            lang: form.elements.lang.value
+        };
+        //console.log(formObj.name, formObj.lang, `with URLSearchParams: ${new URLSearchParams(formObj)}`);
+        
+        fetch(`${API_URL}?'${new URLSearchParams(formObj)}`)
+            .then(response => {
+                //console.log(response);
+                return response.text()})
+            .then((text) => {
+                div.innerHTML = `<h1>${text}</h1>`;    
+            })
+
+        
+  });
+</script>
+</body>
+</html>

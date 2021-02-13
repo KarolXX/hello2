@@ -11,6 +11,7 @@ import org.eclipse.jetty.webapp.*;
 public class App {
     public static void main(String[] args) throws Exception {
         var webapp = new WebAppContext();
+        webapp.setInitParameter("org.eclipse.jetty.servlet.Default.maxCachedFiles", "0"); //solve problem with saving static files(in webapp directory)
         webapp.setResourceBase("src/main/webapp");
         webapp.setContextPath("/");
         webapp.setConfigurations(new Configuration[]
@@ -26,7 +27,7 @@ public class App {
                 });
         webapp.setAttribute("org.eclipse.jetty.server.webapp.ContainerIncludeJarPattern", ".*/classes/.*");
         //webapp.addServlet(HelloServlet.class, "/api/*");
-        var server = new Server(8091); //server == jetty
+        var server = new Server(8081);
         server.setHandler(webapp);
         server.addLifeCycleListener(new AbstractLifeCycle.AbstractLifeCycleListener() {
             @Override
