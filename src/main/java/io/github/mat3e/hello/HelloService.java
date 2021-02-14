@@ -1,9 +1,9 @@
-package io.github.mat3e;
+package io.github.mat3e.hello;
 
-import org.slf4j.LoggerFactory;
+import io.github.mat3e.lang.Lang;
+import io.github.mat3e.lang.LangRepository;
 
 import java.util.Optional;
-import java.util.logging.Logger;
 
 class HelloService {
     static final String FALLBACK_NAME = "world";

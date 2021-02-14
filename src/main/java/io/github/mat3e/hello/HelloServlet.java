@@ -1,4 +1,4 @@
-package io.github.mat3e;
+package io.github.mat3e.hello;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,7 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(name = "Hello", urlPatterns = {"/api/*"})
+@WebServlet(name = "Hello", urlPatterns = {"/api"})
+//HelloServlet is a Servlet so it must be a public class because jetty need access to it
 public class HelloServlet extends HttpServlet {
     private final static String NAME_PARAM = "name";
     private final static String LANG_PARAM = "lang";

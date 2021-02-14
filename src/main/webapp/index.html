@@ -20,12 +20,16 @@
 </form>
 <div id="welcome"></div>
 <script>
+    const form = document.getElementById('welcomeForm');
+    const div = document.getElementById('welcome');
+
     const API_URL = 'http://localhost:8081/api';
     const CODE_TO_EMOJI = {
         'pl': 'PL 🏁',
         'en': 'US 🏴',
         'rus': '🇷🇺'
     }
+    
     fetch(`${API_URL}/langs`)
         .then(response => response.json())
         .then((langArr) => {
@@ -37,9 +41,6 @@
             `).join('\n');
             document.getElementById('langs').innerHTML = checkboxes;
         });
-
-    const form = document.getElementById('welcomeForm');
-    const div = document.getElementById('welcome');    
     
     document.getElementById('btn').addEventListener('click', e => {
         e.preventDefault();
@@ -48,17 +49,15 @@
             name: form.elements.name.value,
             lang: form.elements.lang.value
         };
-        //console.log(formObj.name, formObj.lang, `with URLSearchParams: ${new URLSearchParams(formObj)}`);
+        console.log(formObj.name, formObj.lang, `with URLSearchParams: ${new URLSearchParams(formObj)}`);
         
-        fetch(`${API_URL}?'${new URLSearchParams(formObj)}`)
+        fetch(`${API_URL}?${new URLSearchParams(formObj)}`)
             .then(response => {
-                //console.log(response);
+                console.log(response); //error
                 return response.text()})
             .then((text) => {
                 div.innerHTML = `<h1>${text}</h1>`;    
             })
-
-        
   });
 </script>
 </body>
